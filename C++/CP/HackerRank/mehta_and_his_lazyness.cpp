@@ -12,7 +12,7 @@
 #define mo 1000000007
 using namespace std;
 lli MAX = 1e6;
-bool ar[(int)1e6+1];
+bool ar[(int)1e6 + 1];
 void perfectSquare()
 {
     lli j;
@@ -34,32 +34,38 @@ int main()
     perfectSquare();
     int n, t;
     cin >> t;
-    int p , q;
+    int p, q;
     while (t--)
     {
         cin >> n;
-        vi factors;
-        p = 0, q = 1;
-        for (int i = 2; i * i <= n; i++)
+        p = 0, q = 0;
+        for (int i = 1; i * i < n; i++)
         {
-            int cnt = 0;
-            int a = n;
-            while (n % i == 0)
+            if (n % i == 0)
             {
-                cnt++;
-                a /= i;
                 q++;
-                factors.push_back((i * cnt));
+                if (ar[i])
+                    p++;
             }
         }
-        if (n > 1) factors.push_back(n);
-        sort(factors.begin(),factors.end());
-        for(int i = 0;i<(int)(factors.size());i++)
+        for (int i = sqrt(n); i > 1; i--)
         {
-            if(ar[factors[i]]) p++;
+            if (n % i == 0)
+            {
+                q++;
+                if (ar[(n / i)])
+                    p++;
+            }
         }
-        if(p==0) cout<<p<<endl;
+        if (p == 0)
+            cout << p << endl;
         else
-        cout<<p<<"/"<<q<<endl;
+        {
+            int d;
+            d = __gcd(p, q);
+            p = p / d;
+            q = q / d;
+            cout << p << "/" << q << endl;
+        }
     }
 }
