@@ -1,3 +1,5 @@
+// a template which help me in solving problem 
+
 #include <bits/stdc++.h>
 #define fast ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define lli long long int
@@ -18,22 +20,19 @@ using namespace std;
 
 #define MAX 1000000
 
-
-
 int isPrime[MAX + 1];
 /* or we can use bool isPrime[max+1] */
-//  the algo takes sqrt(n)  time complexity but sieve takes O(n) times due to its initialisation 
+//  the algo takes sqrt(n)  time complexity but sieve takes O(n) times due to its initialisation
 void sieve()
 {
     int maxN = MAX;
-    for (int i = 1; i <= maxN; i++)
-        isPrime[i] = 1;
+    fi(i, maxN) isPrime[i] = 1;
     isPrime[0] = isPrime[1] = 0;
     for (int i = 2; i * i <= maxN; i++)
     {
         if (isPrime[i])
         {
-            for (int j = i * i; j <= maxN; j += i)
+            for (int j = i * i; j <= maxN; j += i) // we are looking for multiple of i so that we can mark them as 0 as they are not prime .
             {
                 isPrime[j] = 0;
             }
@@ -41,9 +40,7 @@ void sieve()
     }
 }
 
-
-
-// sieve for factorization optimized one (better) O(n)
+// sieve for factorization optimized one (better)
 int ar[(int)1e6 + 1];
 void sieveFactorization()
 {
@@ -54,7 +51,7 @@ void sieveFactorization()
     {
         if (ar[i] == -1)
         {
-            for (int j = i * i; j <= maxN; j += i)
+            for (int j = i * i; j <= maxN; j += i) // for each multiple of i starting from the square of i after which it is actually effective
             {
                 if (ar[j] == -1)
                     ar[j] = i;
@@ -63,20 +60,17 @@ void sieveFactorization()
     }
 }
 
-
-
-// original sieve for factorization  in O(n*sqrt(n))
+// original sieve for factorization
 int ar[(int)1e6 + 1];
 void sieveFactorisation()
 {
     int maxN = 1e6;
-    for (int i = 1; i <= maxN; i++)
-        ar[i] = -1;
+    fi(i, maxN) ar[i] = -1;
     for (int i = 2; i <= maxN; i++)
     {
         if (ar[i] == -1)
         {
-            for (int j = i; j <= maxN; j += i)
+            for (int j = i; j <= maxN; j += i) // this steps means for each multiple of i .
             {
                 if (a[j] == -1)
                     a[j] = i;
@@ -85,9 +79,7 @@ void sieveFactorisation()
     }
 }
 
-
-
-// for calculating (A^N)%P in log(n) complexity 
+// for calculating (A^N)%P in log(n) complexity
 lli modularExponent(lli a, lli n, lli p)
 {
     lli res = 1;
@@ -101,9 +93,7 @@ lli modularExponent(lli a, lli n, lli p)
     return res;
 }
 
-
-
-// for calculating the power of a number i.e A^N  in log(n) approach 
+// for calculating the power of a number i.e A^N  in log(n) approach
 lli power(lli a, lli n)
 {
     lli res = 1;
@@ -117,9 +107,7 @@ lli power(lli a, lli n)
     return res;
 }
 
-
-
-// for finding whether the number is prime or not in sqrt(n) in complexity 
+// for finding whether the number is prime or not in sqrt(n) in complexity
 bool isPrime(int n)
 {
     if (n == 1)
@@ -135,8 +123,6 @@ bool isPrime(int n)
     }
     return true;
 }
-
-
 
 // prime factors of N in O(sqrt(n))
 void primeFac(int N)
@@ -156,9 +142,7 @@ void primeFac(int N)
         factors.push_back(N);
 }
 
-
-
-// gcd O(min(A,B)) with recursion not a good approach or competitive use __gcd(a,b) instead 
+// gcd O(min(A,B)) with recursion not a good approach or competitive use __gcd(a,b) instead
 int gcd(int a, int b)
 {
     if (b == 0)
@@ -166,8 +150,6 @@ int gcd(int a, int b)
     else
         return gcd(b, a % b);
 }
-
-
 
 // for calculating gcd of two number here x will give us the gcd
 long int d, x, y;
@@ -184,8 +166,6 @@ void extendedEuclid(long int A, long int B)
     }
 }
 
-
-
 // for calculting modular inverse of a number modulo mod
 long int modInverse(long int A, long int M)
 {
@@ -194,8 +174,6 @@ long int modInverse(long int A, long int M)
     extendedEuclid(A, M);
     return ((x % M + M) % M);
 }
-
-
 
 // for euler totient function in which we have to find the number of integers between 1 to n (inclusive ) which are coprime with n .
 // for this we are using ETF function which takes O(sqrt(n)) time to calculate that .
@@ -217,12 +195,23 @@ int ETF(int n)
     return res;
 }
 
-
-
-// ETF in (n*log(log(n))) which is good 
-
-
-
+// ETF in (n*log(log(n))) which is good
+int phi[(int)1e6 + 1];
+void etfBetter(int n)
+{
+    fi(i, n) phi[i] = i;
+    for (int i = 2; i <= n; i++)
+    {
+        if (phi[i] == i)
+        {
+            for (int j = i; j <= n; j += i)
+            {
+                phi[j] /= i;
+                phi[j] *= (i - 1);
+            }
+        }
+    }
+}
 
 // for binomial coefficient of modulo some number nCk%p type
 // let suppose we have to find the nCk where n can be 1e6 so we have to predefine if we have no of queries which is also 1e6 or 1e7 this will not be good approach to find the coefficient inside the loop of query it will result in tle nobody want that to happen
@@ -235,8 +224,6 @@ int C(int n, int k)
     res = (res * 1LL * modularExponentiation(A[n - k], mod - 2, mod)) % mod;
     return res;
 }
-
-
 
 // driver program
 int main()
@@ -253,6 +240,16 @@ int main()
     {
         cin >> n >> k;
         cout << C(n, k) << endl;
+    }
+
+    // for etfBetter ETF better approach
+    etfBetter(1e6);
+    int q, n;
+    cin >> q;
+    while (q--)
+    {
+        cin >> n;
+        cout << phi[n] << endl;
     }
 
     return 0;
