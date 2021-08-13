@@ -3,6 +3,7 @@
 #define lli long long int
 #define ulli unsigned long long int
 #define endl '\n'
+#define pi  3.14159
 #define vi vector<int>
 #define pi pair<int, int>
 #define vii vector<pi>

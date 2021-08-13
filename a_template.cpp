@@ -1,154 +1,259 @@
-#include<bits/stdc++.h>
-#define fast ios_base::sync_with_stdio(0),cin.tie(0),cout.tie(0);
+#include <bits/stdc++.h>
+#define fast ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
 #define lli long long int
+#define mod 1000000007
 #define ulli unsigned long long int
 #define endl '\n'
 #define vi vector<int>
-#define pi pair<int,int>
+#define pi pair<int, int>
 #define vii vector<pi>
-#define f(i,m) for(int i = 0 ; i<m;i++)
-#define fi(i,m) for(int i = 1 ; i<=m;i++)
-#define fir(i,n,m) for(int i = n ; i<=m;i++)
+#define f(i, m) for (int i = 0; i < m; i++)
+#define fi(i, m) for (int i = 1; i <= m; i++)
+#define fir(i, n, m) for (int i = n; i <= m; i++)
 using namespace std;
 
 // always use "\n" than endl ,
 
-// for sieve of eratosthenes where we have to find the kth prime or check for primes then this is used 
+// for sieve of eratosthenes where we have to find the kth prime or check for primes then this is used
 
-#define MAX 1000000 
-int isPrime[MAX+1];
+#define MAX 1000000
+
+
+
+int isPrime[MAX + 1];
 /* or we can use bool isPrime[max+1] */
+//  the algo takes sqrt(n)  time complexity but sieve takes O(n) times due to its initialisation 
 void sieve()
 {
     int maxN = MAX;
-    for(int i = 1;i<=maxN;i++)
-    isPrime[i]=1;
-    isPrime[0]=isPrime[1]=0;
-    for(int i =2 ;i*i<=maxN;i++)
+    for (int i = 1; i <= maxN; i++)
+        isPrime[i] = 1;
+    isPrime[0] = isPrime[1] = 0;
+    for (int i = 2; i * i <= maxN; i++)
     {
-        if(isPrime[i])
+        if (isPrime[i])
         {
-            for(int j = i*i ;j<=maxN;j+=i)
+            for (int j = i * i; j <= maxN; j += i)
             {
                 isPrime[j] = 0;
             }
         }
     }
 }
-// sieve for factorization optimized one (better)
-int ar[(int)1e6+1];
+
+
+
+// sieve for factorization optimized one (better) O(n)
+int ar[(int)1e6 + 1];
 void sieveFactorization()
 {
     int maxN = 1e6;
-    for(int i = 1 ;i<=maxN;i++) ar[i] = -1;
-    for(int i = 2; i*i<=maxN;i++){
-        if(ar[i]==-1)
+    for (int i = 1; i <= maxN; i++)
+        ar[i] = -1;
+    for (int i = 2; i * i <= maxN; i++)
+    {
+        if (ar[i] == -1)
         {
-            for(int j = i*i;j<=maxN;j+=i){
-                if(ar[j]== -1) ar[j] = i;
+            for (int j = i * i; j <= maxN; j += i)
+            {
+                if (ar[j] == -1)
+                    ar[j] = i;
             }
         }
     }
 }
 
-// original sieve for factorization
-int ar[(int)1e6+1];
+
+
+// original sieve for factorization  in O(n*sqrt(n))
+int ar[(int)1e6 + 1];
 void sieveFactorisation()
 {
     int maxN = 1e6;
-    for(int i = 1 ;i<=maxN;i++) ar[i] = -1;
-    for(int i = 2; i<=maxN;i++){
-        if(ar[i]==-1)
+    for (int i = 1; i <= maxN; i++)
+        ar[i] = -1;
+    for (int i = 2; i <= maxN; i++)
+    {
+        if (ar[i] == -1)
         {
-            for(int j = i;j<=maxN;j+=i){
-                if(a[j]== -1) a[j] = i;
+            for (int j = i; j <= maxN; j += i)
+            {
+                if (a[j] == -1)
+                    a[j] = i;
             }
         }
     }
 }
-lli modularExponent(lli a, lli n,lli p)
+
+
+
+// for calculating (A^N)%P in log(n) complexity 
+lli modularExponent(lli a, lli n, lli p)
 {
     lli res = 1;
     while (n)
     {
-        if(n%2)
-            res = (res%p * a%p)%p,n--;
-        else a = (a%p * a%p)%p , n/=2;
-    }
-    return res ;
-}
-lli power(lli a ,lli n)
-{
-    lli res = 1;
-    while (n) {
-        if(n%2) res = res * a;
-        n =n>>1;
-        a = a*a;
+        if (n % 2)
+            res = (res % p * a % p) % p, n--;
+        else
+            a = (a % p * a % p) % p, n /= 2;
     }
     return res;
 }
 
-// for finding whether the number is prime or not 
+
+
+// for calculating the power of a number i.e A^N  in log(n) approach 
+lli power(lli a, lli n)
+{
+    lli res = 1;
+    while (n)
+    {
+        if (n % 2)
+            res = res * a;
+        n = n >> 1;
+        a = a * a;
+    }
+    return res;
+}
+
+
+
+// for finding whether the number is prime or not in sqrt(n) in complexity 
 bool isPrime(int n)
 {
-    if(n==1)
+    if (n == 1)
     {
         return false;
     }
-    for(int i =2;i*i<=n;i++)
+    for (int i = 2; i * i <= n; i++)
     {
-        if(n%i == 0)
+        if (n % i == 0)
         {
             return false;
         }
     }
     return true;
 }
-// prime factors
+
+
+
+// prime factors of N in O(sqrt(n))
 void primeFac(int N)
 {
-    for(int i =2;i*i<=N;i++)
+    for (int i = 2; i * i <= N; i++)
     {
         int cnt = 0;
-        while(N%i ==0)
+        while (N % i == 0)
         {
             cnt++;
-            N/=i;
+            N /= i;
         }
-        if(cnt>0) factors.push_back((i*cnt));
+        if (cnt > 0)
+            factors.push_back((i * cnt));
     }
-    if(N>1) factors.push_back(N);
+    if (N > 1)
+        factors.push_back(N);
 }
-// gcd
-int gcd(int a,int b)
+
+
+
+// gcd O(min(A,B)) with recursion not a good approach or competitive use __gcd(a,b) instead 
+int gcd(int a, int b)
 {
-    if(b==0) return a;
-    else return gcd(b,a%b);
+    if (b == 0)
+        return a;
+    else
+        return gcd(b, a % b);
 }
-long int d , x , y ;
+
+
+
+// for calculating gcd of two number here x will give us the gcd
+long int d, x, y;
 void extendedEuclid(long int A, long int B)
 {
-    if(B==0) d = A,x = 1,y =0;
-    else {
-        extendedEuclid(B,A%B);
+    if (B == 0)
+        d = A, x = 1, y = 0;
+    else
+    {
+        extendedEuclid(B, A % B);
         long int temp = x;
         x = y;
-        y = temp - (A/B)*y;
+        y = temp - (A / B) * y;
     }
 }
-long int modInverse(long int A,long int M)
+
+
+
+// for calculting modular inverse of a number modulo mod
+long int modInverse(long int A, long int M)
 {
-    if(prime(M)) return modularExponentiation(A,M-2,M);
-    extendedEuclid(A,M);
-    return ((x%M + M)%M);
+    if (prime(M))
+        return modularExponentiation(A, M - 2, M);
+    extendedEuclid(A, M);
+    return ((x % M + M) % M);
 }
-// driver program 
+
+
+
+// for euler totient function in which we have to find the number of integers between 1 to n (inclusive ) which are coprime with n .
+// for this we are using ETF function which takes O(sqrt(n)) time to calculate that .
+int ETF(int n)
+{
+    int res = n;
+    for (int i = 2; i * i <= n; i++)
+    {
+        if (n % i == 0)
+        {
+            res /= i;
+            res *= (i - 1);
+            while (n % i == 0)
+                n /= i;
+        }
+    }
+    if (n > 1)
+        res /= n, res *= (n - 1);
+    return res;
+}
+
+
+
+// ETF in (n*log(log(n))) which is good 
+
+
+
+
+// for binomial coefficient of modulo some number nCk%p type
+// let suppose we have to find the nCk where n can be 1e6 so we have to predefine if we have no of queries which is also 1e6 or 1e7 this will not be good approach to find the coefficient inside the loop of query it will result in tle nobody want that to happen
+int AR[(int)1e6 + 1];
+int C(int n, int k)
+{
+    int res = 1;
+    res = (res * 1LL * AR[n]) % mod;
+    res = (res * 1LL * modularExponentiation(A[k], mod - 2, mod)) % mod;
+    res = (res * 1LL * modularExponentiation(A[n - k], mod - 2, mod)) % mod;
+    return res;
+}
+
+
+
+// driver program
 int main()
 {
     fast;
     /* code  */
-    
-
+    // for binomial coefficient
+    AR[0] = AR[1] = 1;
+    for (int i = 2; i <= 1e6; i++)
+        AR[i] = (AR[i - 1] * 1LL * i) % mod;
+    int q, n, k;
+    cin >> q;
+    while (q--)
+    {
+        cin >> n >> k;
+        cout << C(n, k) << endl;
+    }
 
     return 0;
 }
