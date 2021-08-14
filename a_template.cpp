@@ -13,6 +13,90 @@
 #define fi(i, m) for (int i = 1; i <= m; i++)
 #define fir(i, n, m) for (int i = n; i <= m; i++)
 using namespace std;
+//? ARRAY 
+// array rotation 
+//1.) juggling algorithm O(n) and O(1) for array rotation 
+void jugglingAlgorithm(int a[], int n ,int d)
+{
+    // where d is the number of rotation of array should happen 
+    int k,temp,j;
+    for(int i = 0;i<__gcd(d%n , n);i++)
+    {
+        temp = a[i];
+        j = i;
+        while(1)
+        {
+            k = j+d%n;
+            if(k>=n) k = k-n;
+            if(k == i) break;
+            a[j] = arr[k];
+            j = k;
+        }
+        a[j] = temp;
+    }
+}
+
+// 2.) block Swap Algorithm O(n) and O(1) it swap towards 0 index i.e 1st values goes to the last i.e left Rotate
+void Swap(int arr[], int fi, int si, int d)
+{
+    int i, temp;
+    f(i, d)
+    {
+        temp = arr[fi + i];
+        arr[fi + i] = arr[si + i];
+        arr[si + i] = temp;
+    }
+}
+void blockSwapAlgorithm(int a[], int n, int d)
+{
+    int i, j;
+    if (d == 0 || d == n)
+        return;
+    i = d;
+    j = n - d;
+    while (i != j)
+    {
+        if (i < j)
+        {
+            Swap(a, d - i, d + j - i, i);
+            j -= i;
+        }
+        else
+        {
+            Swap(a, d - i, d, j);
+        }
+    }
+    Swap(a, d - i, d, i);
+}
+
+// 3.) reversal algorithm O(n) & O(1) , in this we divide the array ar[0..d] and ar[d+1...n] and then we first reverse ar[0..d] and reverse the ar[d+1,n] part and then we reverse the array and this is how we get the array ...
+// this is also helped to rotate the array in left
+void reverseArray(int arr[], int start, int end)
+{
+    int temp = 0;
+    while (start < end)
+    {
+        temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+void reversalAlgorithm(int arr[], int n, int d)
+{
+    if (d == 0)
+    {
+        return;
+    }
+    d = d % n;
+    reverseArray(arr, 0, d - 1);
+    reverseArray(arr, d, n - 1);
+    reverseArray(arr, 0, n - 1);
+}
+
+// ? NUMBER THEORY
 
 // always use "\n" than endl ,
 
@@ -77,6 +161,52 @@ void sieveFactorisation()
             }
         }
     }
+}
+
+// segmented sieve to find the prime number between a particular range where range is not larger than 1e6 but range limit can go upto 1e12 as this much big number of array is not possible so we use segmented sieve .
+
+// 1 step is to generate sieve upto 1e6 which is already done above we will add one thing more in it which is adding the primes in separate list .
+vi primes;
+int prime[(int)1e6 + 1];
+void sieveForSegment(int maxN)
+{
+    vi ar(maxN + 1, 0); // creating an array for the the range
+    ar[1] = 1;
+    for (int i = 2; i <= maxN; i++)
+    {
+        if (ar[i] == 0)
+        {
+            for (int j = 2 * i; j <= maxN; j += i)
+            {
+                ar[j] = 1;
+            }
+        }
+    }
+    fi(i, maxN) if (ar[i] == 0) primes.push_back(i);
+}
+
+// now creating an init function for the segmented sieve to work
+void segmentedSieve(int L, int R)
+{
+    if (L == 1)
+        L++;
+    int maxN = R - L + 1;
+    vi ar(maxN, 0);
+    for (lli p : primes)
+        if (p * p <= R)
+        {
+            int i = (L / p) * p;
+            if (i < L)
+                i += p;
+            for (; i <= R; i += p)
+            {
+                if (i != p)
+                    ar[i - L] = 1;
+            }
+        }
+    f(i, maxN) 
+        if (ar[i] == 0)
+        cout<< L + i << endl; // here L+i is the prime in the range L to R
 }
 
 // for calculating (A^N)%P in log(n) complexity
@@ -150,6 +280,10 @@ int gcd(int a, int b)
     else
         return gcd(b, a % b);
 }
+
+// for finding the common divisor of K,N where N is given beforehand and k is given at each query 
+// in O(log(n)^2)
+
 
 // for calculating gcd of two number here x will give us the gcd
 long int d, x, y;
@@ -226,9 +360,9 @@ int C(int n, int k)
 }
 
 //  when we have to find the gcd of all the number 1 to n (inclusive) with n , then we can use this method  in O(sqrt(n)) time complexity
-int getCount(int d , int n)
+int getCount(int d, int n)
 {
-    return phi[n/d];
+    return phi[n / d];
 }
 
 // driver program
