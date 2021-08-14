@@ -1,4 +1,4 @@
-// a template which help me in solving problem 
+// a template which help me in solving problem
 
 #include <bits/stdc++.h>
 #define fast ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
@@ -225,6 +225,12 @@ int C(int n, int k)
     return res;
 }
 
+//  when we have to find the gcd of all the number 1 to n (inclusive) with n , then we can use this method  in O(sqrt(n)) time complexity
+int getCount(int d , int n)
+{
+    return phi[n/d];
+}
+
 // driver program
 int main()
 {
@@ -250,6 +256,27 @@ int main()
     {
         cin >> n;
         cout << phi[n] << endl;
+    }
+
+    // for summation of gcd of 1 to N with N
+    int q, n, res, d1, d2;
+    cin >> q;
+    while (q--)
+    {
+        cin >> n;
+        res = 0;
+        for (int i = 1; i * i <= n; i++)
+        {
+            if (n % i == 0)
+            {
+                d1 = i;
+                d2 = n / i;
+                res += d1 * getCount(d1, n);
+                if (d1 != d2)
+                    res += d2 * getCount(d2, n);
+            }
+        }
+        cout << res << endl;
     }
 
     return 0;
