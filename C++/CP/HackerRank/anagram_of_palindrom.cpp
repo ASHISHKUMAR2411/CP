@@ -7,7 +7,7 @@ using namespace std;
  *
  * The function is expected to return a STRING.
  * The function accepts STRING s as parameter.
- */
+ */ 
 
 string gameOfThrones(string s)
 {
