@@ -9,26 +9,30 @@
 #define vi vector<int>
 #define pi pair<int, int>
 #define vii vector<pi>
+#define pb push_back
+#define sz(x) (int)(x).size()
 #define f(i, m) for (int i = 0; i < m; i++)
 #define fi(i, m) for (int i = 1; i <= m; i++)
 #define fir(i, n, m) for (int i = n; i <= m; i++)
 using namespace std;
-//? ARRAY 
-// array rotation 
-//1.) juggling algorithm O(n) and O(1) for array rotation 
-void jugglingAlgorithm(int a[], int n ,int d)
+//? ARRAY
+// array rotation
+//1.) juggling algorithm O(n) and O(1) for array rotation
+void jugglingAlgorithm(int a[], int n, int d)
 {
-    // where d is the number of rotation of array should happen 
-    int k,temp,j;
-    for(int i = 0;i<__gcd(d%n , n);i++)
+    // where d is the number of rotation of array should happen
+    int k, temp, j;
+    for (int i = 0; i < __gcd(d % n, n); i++)
     {
         temp = a[i];
         j = i;
-        while(1)
+        while (1)
         {
-            k = j+d%n;
-            if(k>=n) k = k-n;
-            if(k == i) break;
+            k = j + d % n;
+            if (k >= n)
+                k = k - n;
+            if (k == i)
+                break;
             a[j] = arr[k];
             j = k;
         }
@@ -47,6 +51,7 @@ void Swap(int arr[], int fi, int si, int d)
         arr[si + i] = temp;
     }
 }
+
 void blockSwapAlgorithm(int a[], int n, int d)
 {
     int i, j;
@@ -204,9 +209,9 @@ void segmentedSieve(int L, int R)
                     ar[i - L] = 1;
             }
         }
-    f(i, maxN) 
-        if (ar[i] == 0)
-        cout<< L + i << endl; // here L+i is the prime in the range L to R
+    f(i, maxN) if (ar[i] == 0)
+            cout
+        << L + i << endl; // here L+i is the prime in the range L to R
 }
 
 // for calculating (A^N)%P in log(n) complexity
@@ -281,9 +286,27 @@ int gcd(int a, int b)
         return gcd(b, a % b);
 }
 
-// for finding the common divisor of K,N where N is given beforehand and k is given at each query 
-// in O(log(n)^2)
+// to find all the divisor of n in sqrt(n) time complexity we have ....
+vi findSquareRoot(int n)
+{
+    vi divisor;
+    for (int i = 1; i * i < n; i++)
+    {
+        if (n % i == 0)
+        {
+            divisor.pb(i);
+        }
+    }
+    for (int i = sqrt(n); i >= 1; i--)
+    {
+        if (n % i == 0)
+            divisor.pb(n / i);
+    }
+    return divisor;
+}
 
+// for finding the common divisor of K,N where N is given beforehand and k is given at each query
+// in O(log(n)^2)
 
 // for calculating gcd of two number here x will give us the gcd
 long int d, x, y;
