@@ -1,0 +1,250 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct ll
+{
+    int flag;
+    int data ;
+    struct ll *next;
+};
+struct ll *create()
+{
+    int data;
+    struct ll *temp=(struct ll *)malloc(sizeof(struct ll));
+    printf("\n enter the data ");
+    scanf("%d",&data);
+    temp->data=data;
+    temp->flag=0;
+    temp->next=NULL;
+    return temp;
+}
+void insert(struct ll *ptr)
+{
+    struct ll *pre;
+    while(ptr!=NULL)
+    {
+        pre=ptr;
+        ptr=ptr->next;
+    }
+    int data;
+    struct ll *temp=(struct ll *)malloc(sizeof(struct ll));
+    printf("\n enter the data : ");
+    scanf("%d",&data);
+    temp->data=data;
+    temp->flag=0;
+    temp->next=NULL;
+    pre->next=temp;
+}
+void deletion(struct ll *ptr)
+{
+    int pos,count=0;
+    struct ll *pre;
+    printf("enter the position to delete : ");
+    scanf("%d",&pos);
+    while(ptr!=NULL && count<pos)
+    {
+        pre=ptr;
+        count++;
+        ptr=ptr->next;
+    }
+    pre->next=ptr->next;
+}
+int length(struct ll *ptr)
+{
+    int count=0;
+    while(ptr!=NULL)
+    {
+        count++;
+        ptr=ptr->next;
+    }
+    // printf("\n%d",count);
+    return count;
+}
+void print(struct ll *ptr)
+{
+    while(ptr!=NULL)
+    {
+        printf("%d ",ptr->data);
+        ptr=ptr->next;
+    }
+}
+void middle(struct ll *ptr)
+{
+    struct ll *pre,*post;
+    pre=ptr;
+    post=ptr;
+    // int count=0,len=length(ptr);
+    while(post->next!=NULL && post!=NULL)
+    {
+        pre=pre->next;
+        post=(post->next)->next;
+    }
+    printf("\n%d",pre->data);
+}
+void create_loop(struct ll *ptr)
+{
+    struct ll *pre;
+    int n,count=0;
+    printf("\n enter the position for the creating the loop int the array : ");
+    scanf("%d",&n);
+    while(ptr!=NULL && count<n)
+    {
+        count++;
+        ptr=ptr->next;
+    }
+    pre=ptr;
+    while(ptr->next=NULL)
+    {
+        ptr=ptr->next;
+    }
+    ptr->next=pre;
+}
+void check_loop(struct ll *ptr)
+{
+    struct ll *pre,*post;
+    pre=ptr;
+    post=ptr;
+    int count =1;
+    while(pre && post && post->next)
+    {
+        pre=pre->next;
+        post=(post->next)->next;
+        if(pre==post)
+        {
+            printf("\n yes loop");
+            return;
+        }
+    }
+    printf("\n No");
+    return;
+}
+void palindrom(struct ll *ptr)
+{
+    struct ll *pre=ptr;
+    int a[100];
+    // in this we are storing values in the array and then finding the palindrome
+    int count =0;
+    while(ptr!=NULL)
+    {
+        a[count] = ptr->data;
+        count++;
+        ptr=ptr->next;
+    }
+    for(int i=0;i<(count/2);i++)
+    {
+        if(a[i]==a[count-1-i])
+        {
+            continue;
+        }
+        else
+        {
+            printf("\n not palindrom : ");
+            return;
+        }
+    }
+    printf("\n palindrom");
+    return ; 
+}
+void display(struct ll *ptr)
+{
+    struct ll *pre=ptr;
+    int *a,b[20],count=0;
+    while(ptr!=NULL)
+    {
+        // a[count]=ptr->data;
+        b[count]=ptr->data;
+        count++;
+        ptr=ptr->next;
+    }
+    a=(int *)malloc(count*sizeof(int));
+    count=0;
+    while(pre!=NULL)
+    {
+        a[count++]=pre->data;
+        pre=pre->next;
+    }
+    for(int i=0;i<count;i++)
+    {
+        printf("\n%d %d",b[i],a[i]);
+    }
+}
+int main()
+{
+    struct ll *ptr,*head=create();
+    int choice,l;
+    char ch;
+    // int *a,b[20],count=0;
+    do
+    {
+        printf("\n1.Insert");
+        printf("\n2.delete");
+        printf("\n3.length");
+        printf("\n4.print");
+        printf("\n5.middle");
+        printf("\n6.Loop");
+        printf("\n7.Check-loop");
+        printf("\n8.Palindrom");
+        printf("\n9.display");
+        printf("\n10.exit");
+        printf("\n");
+        label:
+        printf("\n enter your choice : ");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:
+            insert(head);
+            break;
+            case 2:
+            deletion(head);
+            break;
+            case 3:
+            l=length(head);
+            printf("\n%d",l);
+            break;
+            case 4:
+            print(head);
+            break;
+            case 5:
+            middle(head);
+            break;
+            case 6:
+            create_loop(head);
+            break;
+            case 7:
+            check_loop(head);
+            break;
+            case 8:
+            palindrom(head);
+            break;
+            case 9:
+            display(head);
+            break;
+            case 10:
+            exit(0);
+            break;
+            default : 
+            printf("\n you have entered the wrong choice  ");
+            goto label;
+            break;
+        }
+        printf("\n enter y/Y for more operation : ");
+        scanf("%c",&ch);
+        scanf("%c",&ch);
+    } while (ch=='y'||ch=='Y');
+    // ptr=head;
+    // while(ptr!=NULL)
+    // {
+    //     // a[count]=ptr->data;
+    //     b[count]=ptr->data;
+    //     ptr=ptr->next;
+    // }
+    // for(int i=0;i<count;i++)
+    // {
+    //     printf("%d ",a[i]);
+    // }
+    // for(int i=0;i<count;i++)
+    // {
+    //     printf("%d ",a[i]);
+    // }
+    return 0;
+}
