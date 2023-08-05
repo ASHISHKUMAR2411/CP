@@ -1,0 +1,21 @@
+que)  -> Which sorting algorithm will take least time when all elements of input array are identical?
+
+Ans  -> The insertion sort will take O(n) time when input array is already sorted. 
+
+
+
+Points To Remember
+-> HEapSorting    SelectionSort    InsertionSort    MergeSort 
+
+
+-> Selection sort makes O(n) swaps which is minimum among all sorting algorithms mentioned above.
+
+-> Merge and heap has O(n*logn)sorting algorithms has the lowest worst-case complexity.
+
+-> Selection Sort is an in-place algorithm having minimum number of swaps. It works on greedy approach and takes O(n) swaps to sort the array of n elements.
+
+
+->MergeSort is preferred over QuickSort for Linked Lists
+
+
+// Quick Sort is preferred over MergeSort for sorting Arrays 

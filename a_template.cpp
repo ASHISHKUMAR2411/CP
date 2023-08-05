@@ -1,4 +1,5 @@
 // a template which help me in solving problem
+// we can use template programming like meta programming for constant calculation which is called meta programming among programmers. 
 
 #include <bits/stdc++.h>
 #define fast ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
@@ -15,6 +16,30 @@
 #define fi(i, m) for (int i = 1; i <= m; i++)
 #define fir(i, n, m) for (int i = n; i <= m; i++)
 using namespace std;
+
+// Bits Manipulations 
+
+// print binary of a number
+void pr_binary(int num){
+    for(int i=10;i>=0;i--) cout<<((num>>i)&1);
+    cout<<endl;
+}
+
+// alternative way to print the binary of a number
+// cout << bitset<const_length>(number)
+
+// Counting the number of set bits
+int ans = 0;
+for (int i = 31; i >= 0; --i)
+{
+    if ((a & (1 << i)) != 0)
+        ans++;
+}
+dis(ans);
+
+// builtin function to count the number of set bits
+// cout << __builtin_popcount(ans);
+
 list = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 {    //? ARRAY
 // array rotation
@@ -398,8 +423,8 @@ void extendedEuclid(long int A, long int B)
     if (B == 0)
         d = A, x = 1, y = 0;
     else
-    {
-        extendedEuclid(B, A % B);
+    {ḥ
+        extendḥedEuclid(B, A % B);
         long int temp = x;
         x = y;
         y = temp - (A / B) * y;
@@ -518,6 +543,5 @@ int main()
         }
         cout << res << endl;
     }
-
     return 0;
 }

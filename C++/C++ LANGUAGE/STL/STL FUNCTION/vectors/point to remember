@@ -1,0 +1,7 @@
+As first of all we have to avoid copy and creation of the same variable where it is already there
+
+we have to use reference to avoid the same 
+
+
+we can use <bits/stdc++.h>
+in place of all predefined header file and includes all the library

@@ -1,0 +1,2 @@
+//? in sorting we have to reaarange the given array or list of element accordingly as required , there is a thing called comparison operator in the sorting where it is the deciding factor for the new sorted array , 
+// Quick Sort is preferred over MergeSort for sorting Arrays 

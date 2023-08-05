@@ -1,0 +1,16 @@
+Always Remember one thing which is that we always have to  use reference which will avoid the cpu tine and memory
+
+We should keep in mind the difference of pointer and reference as they are almost same and have at least differnces as they both are used to change the value of the local variable inside other function and they are also used in very different places
+
+Major differences are
+1. pointer can be void declared as
+void *a= &b;
+but reference cannot be 
+void &s=b; // invalid statement 
+
+2.Poiter have multiple level of  indirection but on the same way reference do not have multiple way of indirection 
+for ex *a,**A,***b are possible
+but ex &a is valid 
+but &&a // invalid
+
+

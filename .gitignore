@@ -10,3 +10,15 @@
 *.v
 *doxyfile
 *.log
+tempCodeRunnerFile*
+*.js
+*.py
+*.sh
+*.bat
+*.jpg
+*.json
+*.bin
+*.y
+*.l
+*.h
+*.gch

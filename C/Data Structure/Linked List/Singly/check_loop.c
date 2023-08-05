@@ -1,0 +1,191 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct ll
+{
+    int data ;
+    struct ll *next;
+};
+struct ll *create()
+{
+    int data;
+    struct ll *temp=(struct ll *)malloc(sizeof(struct ll));
+    printf("\n enter the data ");
+    scanf("%d",&data);
+    temp->data=data;
+    temp->next=NULL;
+    return temp;
+}
+void insert(struct ll *ptr)
+{
+    struct ll *pre;
+    while(ptr!=NULL)
+    {
+        pre=ptr;
+        ptr=ptr->next;
+    }
+    int data;
+    struct ll *temp=(struct ll *)malloc(sizeof(struct ll));
+    printf("\n enter the data : ");
+    scanf("%d",&data);
+    temp->data=data;
+    temp->next=NULL;
+    pre->next=temp;
+}
+void deletion(struct ll *ptr)
+{
+    int pos,count=0;
+    struct ll *pre;
+    printf("enter the position to delete : ");
+    scanf("%d",&pos);
+    while(ptr!=NULL && count<pos)
+    {
+        pre=ptr;
+        count++;
+        ptr=ptr->next;
+    }
+    pre->next=ptr->next;
+}
+int length(struct ll *ptr)
+{
+    int count=0;
+    while(ptr!=NULL)
+    {
+        count++;
+        ptr=ptr->next;
+    }
+    // printf("\n%d",count);
+    return count;
+}
+void print(struct ll *ptr)
+{
+    while(ptr!=NULL)
+    {
+        printf("%d ",ptr->data);
+        ptr=ptr->next;
+    }
+}
+void middle(struct ll *ptr)
+{
+    struct ll *pre,*post;
+    pre=ptr;
+    post=ptr;
+    // int count=0,len=length(ptr);
+    while(post->next!=NULL && post!=NULL)
+    {
+        pre=pre->next;
+        post=(post->next)->next;
+    }
+    printf("\n%d",pre->data);
+}
+void create_loop(struct ll *ptr)
+{
+    struct ll *pre;
+    int n,count=0;
+    printf("\n enter the position for the creating the loop int the array : ");
+    scanf("%d",&n);
+    while(ptr!=NULL && count<n)
+    {
+        count++;
+        ptr=ptr->next;
+    }
+    pre=ptr;
+    while(ptr!=NULL)
+    {
+        ptr=ptr->next;
+    }
+    ptr=pre;
+}
+int check_loop(struct ll *ptr)
+{
+    int *a,count=0,i=0;
+    // O(n*n) but if we use unordered set then we can check for O(n) 
+    while(ptr!=NULL)
+    {
+        a[count++] = ptr->next;
+        ptr=ptr->next;
+        for(int i=0;i<count;i++)
+        {
+            for(int j=0;j<count;j++)
+            {
+                if(i!=j)
+                {
+                    if(a[i]==a[j])
+                    {
+                        printf("\n yes loop is present ");
+                        return j;
+                    }
+                    else if(a[i]==0)
+                    {
+                        printf("\n no loop is present ");
+                        return -1;
+                    }
+                }
+            }
+        }
+    }
+    
+
+}
+
+int main()
+{
+    struct ll *head=create();
+    int choice,l;
+    char ch;
+    do
+    {
+        printf("\n1.Insert");
+        printf("\n2.delete");
+        printf("\n3.length");
+        printf("\n4.print");
+        printf("\n5.middle");
+        printf("\n6.Loop");
+        printf("\n7.Check-loop");
+        printf("\n8.exit");
+        printf("\n");
+        label:
+        printf("\n enter your choice : ");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1:
+            insert(head);
+            break;
+            case 2:
+            deletion(head);
+            break;
+            case 3:
+            l=length(head);
+            printf("\n%d",l);
+            break;
+            case 4:
+            print(head);
+            break;
+            case 5:
+            middle(head);
+            break;
+            case 6:
+            create_loop(head);
+            break;
+            case 7:
+            l=check_loop(head);
+            if(l==-1)
+            {
+                printf("\n no loop");
+            }
+            printf("\n %d",l);
+            break;
+            case 8:
+            exit(0);
+            break;
+            default : 
+            printf("\n you have entered the wrong choice  ");
+            goto label;
+            break;
+        }
+        printf("\n enter y/Y for more operation : ");
+        scanf("%c",&ch);
+        scanf("%c",&ch);
+    } while (ch=='y'||ch=='Y');
+    return 0;
+}
