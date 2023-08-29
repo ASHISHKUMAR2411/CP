@@ -11,11 +11,8 @@ int main(){
             cin >> matrix[i][j];
             if(matrix[i][j] == 'V') sx = i, sy = j;
             if(matrix[i][j] == 'H') ax = i, ay = j;
-            cout << matrix[i][j] << " ";
         }
-        cout << endl;
     }
-    cout << sx << " " << sy << endl;
     priority_queue<vector<int>,vector<vector<int>>, greater<vector<int>> > pq;
     pq.push({0, sx, sy, -1, -1});
     int dx[] = {0,0,-1,1};
@@ -28,15 +25,20 @@ int main(){
         auto tp = pq.top();
         pq.pop();
         // check++;
-        cout << tp[0] << ":" << tp[1] << " "<< tp[2] << "\n";
+        // cout << tp[1] << " "<< tp[2] << "\n";
         // if(check >= 1e4) break;
         int dir = tp[0];
         int u = tp[1], v = tp[2], pu = tp[3], pv = tp[4];
+        // if(u == ax and v == ay){
+        //     ans = dir;
+        //     break;
+        // }
         for(int i = 0; i < 4; i++ ){
             int x = u + dx[i];
             int y = v + dy[i];
             if(x < 0 or y < 0 or x >= n or y >= m or matrix[x][y] == '*') continue;
             if(pu == x and pv == y) continue;
+ 
             if(pu != -1 and pv != -1){
                 if(pu == x or pv == y){
                     if(change[x][y] > dir){
